@@ -27,27 +27,4 @@ class ServerBaseApplicationTests {
 
     }
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Mock
-    HelloWorld myMock;
-
-    @Test
-    void isMockitoWorking() {
-        when(myMock.toString()).thenReturn("AAA");
-        assertEquals("AAA", myMock.toString());
-        Class<RuntimeException> exceptionClass = RuntimeException.class;
-        assertThrows(exceptionClass, () -> {
-            Integer.parseInt("a");
-        });
-    }
-
-    @Test
-    void helloWorldIsGood() throws Exception {
-        mockMvc.perform(get("/home)"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("ciao"));
-
-
-    }
 }

@@ -2,6 +2,7 @@ package com.Dst.serverBase.service;
 
 import com.Dst.serverBase.dto.dettagliDto.DettagliRegisterDto;
 import com.Dst.serverBase.entities.DettaglioOrdine;
+import com.Dst.serverBase.entities.Prodotto;
 import com.Dst.serverBase.repositories.DettaglioOrdineRepo;
 import com.Dst.serverBase.repositories.OrdineRepo;
 import com.Dst.serverBase.repositories.ProdottoRepo;
@@ -13,18 +14,22 @@ public class DettagliOrdineService {
 
     @Autowired
     DettaglioOrdineRepo dettaglioOrdineRepo;
-
+    @Autowired
+    OrdineRepo ordineRepo;
     @Autowired
     ProdottoRepo prodottoRepo;
 
-    @Autowired
-    OrdineRepo ordineRepo;
 
-    public void insertNewDettagli(DettagliRegisterDto dto){
-        dettaglioOrdineRepo.save(DettaglioOrdine.builder()
-                        .prodotto(prodottoRepo.findById(dto.getProdotto_id()).get())
-                        .ordine(ordineRepo.findById(dto.getOrdine_id()).get())
-                        .quantita(dto.getQuantita())
-                .build());
+    public DettaglioOrdine insertNewDettagli(DettagliRegisterDto dto, Long ordine_id){
+        Prodotto prodotto = prodottoRepo.findById(dto.getProdotto_id()).get();
+        Double prezzoTotale = prodotto.getPrezzo() * dto.getQuantita();
+        DettaglioOrdine ordine = DettaglioOrdine.builder()
+                .ordine(ordineRepo.findById(ordine_id).get())
+                .prodotto(prodottoRepo.findById(dto.getProdotto_id()).get())
+                .prezzoTotale(prezzoTotale)
+                .quantita(dto.getQuantita())
+                .build();
+
+        return ordine;
     }
 }

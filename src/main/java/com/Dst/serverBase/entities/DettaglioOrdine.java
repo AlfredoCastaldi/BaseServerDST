@@ -1,5 +1,6 @@
 package com.Dst.serverBase.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public class DettaglioOrdine {
 
     @ManyToOne
     @JoinColumn(name = "ordine_id", nullable = false)
+    @JsonIgnore
     private Ordine ordine;
 
     @ManyToOne

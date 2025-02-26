@@ -18,7 +18,5 @@ public class DettagliRegisterDto {
 
     private Integer quantita;
 
-    private Long ordine_id;
-
     private Long prodotto_id;
 }

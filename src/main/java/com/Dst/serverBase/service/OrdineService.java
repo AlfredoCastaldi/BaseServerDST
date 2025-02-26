@@ -29,9 +29,6 @@ public class OrdineService {
     @Autowired
     DettagliOrdineService dettagliOrdineService;
 
-    @Autowired
-    ProdottoService prodottoService;
-
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     @Transactional
@@ -43,12 +40,12 @@ public class OrdineService {
                 .stato("IN ATTESA")
                 .build();
         Long newOrderId = ordineRepo.save(ordine).getId();
-        System.out.println(newOrderId);
         ordine.setDettagli(getOrdineDetails(newOrderId, detailsDto));
         ordine.setTotale(ordine.getDettagli().stream().mapToDouble(DettaglioOrdine::getPrezzoTotale).sum());
         return ordine;
     }
 
+    @Transactional
     private List<DettaglioOrdine> getOrdineDetails(Long ordine_id, List<DettagliRegisterDto> dto){
         return dto.stream().map(
                 (valueDto)->{

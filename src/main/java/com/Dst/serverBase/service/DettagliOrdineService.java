@@ -29,7 +29,7 @@ public class DettagliOrdineService {
                 .prezzoTotale(prezzoTotale)
                 .quantita(dto.getQuantita())
                 .build();
-
+        dettaglioOrdineRepo.save(ordine);
         return ordine;
     }
 }

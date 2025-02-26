@@ -9,3 +9,6 @@ spring:
     hibernate:
       ddl-auto: update #none
     show-sql: true
+spring doc:
+  swagger-ui:
+    path: /swagger-ui.html

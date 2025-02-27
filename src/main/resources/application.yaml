@@ -7,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update #none
+      ddl-auto: create-drop #none
     show-sql: true
 spring doc:
   swagger-ui:

@@ -2,8 +2,6 @@ package com.Dst.serverBase.dto.ordineDto;
 
 import com.Dst.serverBase.entities.DettaglioOrdine;
 import com.Dst.serverBase.entities.Utente;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrdineResponseDto {
+public class OrdineResponseDTO {
 
     private LocalDate data;
     private String stato; // IN_ATTESA, SPEDITO, CONSEGNATO

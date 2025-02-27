@@ -1,8 +1,8 @@
 package com.Dst.serverBase.service;
 
-import com.Dst.serverBase.dto.dettagliDto.DettagliRegisterDto;
+import com.Dst.serverBase.dto.dettagliDto.DettaglioOrdineMapperDTO;
+import com.Dst.serverBase.dto.dettagliDto.DettaglioOrdineRegisterDTO;
 import com.Dst.serverBase.entities.DettaglioOrdine;
-import com.Dst.serverBase.entities.Prodotto;
 import com.Dst.serverBase.repositories.DettaglioOrdineRepo;
 import com.Dst.serverBase.repositories.OrdineRepo;
 import com.Dst.serverBase.repositories.ProdottoRepo;
@@ -20,16 +20,9 @@ public class DettagliOrdineService {
     ProdottoRepo prodottoRepo;
 
 
-    public DettaglioOrdine insertNewDettagli(DettagliRegisterDto dto, Long ordine_id){
-        Prodotto prodotto = prodottoRepo.findById(dto.getProdotto_id()).get();
-        Double prezzoTotale = prodotto.getPrezzo() * dto.getQuantita();
-        DettaglioOrdine ordine = DettaglioOrdine.builder()
-                .ordine(ordineRepo.findById(ordine_id).get())
-                .prodotto(prodottoRepo.findById(dto.getProdotto_id()).get())
-                .prezzoTotale(prezzoTotale)
-                .quantita(dto.getQuantita())
-                .build();
-        dettaglioOrdineRepo.save(ordine);
-        return ordine;
+    public DettaglioOrdine insertNewDettagli(DettaglioOrdineRegisterDTO dto, Long ordine_id){
+        return dettaglioOrdineRepo.save(DettaglioOrdineMapperDTO.fromDtoToEntity(dto, ordine_id));
     }
+
+
 }

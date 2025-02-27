@@ -4,23 +4,23 @@ import com.Dst.serverBase.entities.Utente;
 
 import java.util.List;
 
-public class UtenteMapper {
+public class UtenteMapperDTO {
 
 
-   public static Utente fromDtoToEntity(UtenteRegisterDto dto){
+   public static Utente fromDtoToEntity(UtenteRegisterDTO dto){
        return Utente.builder()
                .nome(dto.getNome())
                .email(dto.getEmail())
                .build();
    }
-    public static UtenteResponseDto fromEntityToDto(Utente dto){
-        return UtenteResponseDto.builder()
+    public static UtenteResponseDTO fromEntityToDto(Utente dto){
+        return UtenteResponseDTO.builder()
                 .id(dto.getId())
                 .nome(dto.getNome())
                 .email(dto.getEmail())
                 .build();
     }
-    public static List<UtenteResponseDto> fromDtoToEntity(List<Utente> dto){
-        return dto.stream().map(UtenteMapper::fromEntityToDto).toList();
+    public static List<UtenteResponseDTO> fromEntitiesListToDTOList(List<Utente> dto){
+        return dto.stream().map(UtenteMapperDTO::fromEntityToDto).toList();
     }
 }

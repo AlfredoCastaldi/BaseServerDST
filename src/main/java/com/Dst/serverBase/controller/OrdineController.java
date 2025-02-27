@@ -1,7 +1,7 @@
 package com.Dst.serverBase.controller;
 
-import com.Dst.serverBase.dto.dettagliDto.DettagliRegisterDto;
-import com.Dst.serverBase.entities.Ordine;
+import com.Dst.serverBase.dto.dettagliDto.DettaglioOrdineRegisterDTO;
+import com.Dst.serverBase.dto.ordineDto.OrdineResponseDTO;
 import com.Dst.serverBase.service.OrdineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,12 @@ public class OrdineController {
     OrdineService ordineService;
 
     @PostMapping
-    public ResponseEntity<Ordine> newOrder(@RequestParam Long user_id, @RequestBody List<DettagliRegisterDto> dto){
-        return ResponseEntity.ok(ordineService.insertNewOrder(user_id, dto));
+    public ResponseEntity<OrdineResponseDTO> newOrder(@RequestParam Long user_id, @RequestBody List<DettaglioOrdineRegisterDTO> dto){
+        return ordineService.insertNewOrder(user_id, dto).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrdineResponseDTO>> getALlOrders(){
+        return ResponseEntity.ok(ordineService.getAllOrders());
     }
 }

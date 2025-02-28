@@ -57,7 +57,7 @@ public class OrdineController {
 
     @GetMapping("/totale-speso/{userId}")
     public ResponseEntity<CarrelloDTO> getCarrello(@PathVariable Long user_id){
-        return ResponseEntity.ok(ordineService.getCarrello(user_id));
+        return ordineService.getCarrello(user_id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/ordini/intervallo")
     public ResponseEntity<?> getCarrelloByDates(@RequestParam String startDate, @RequestParam String endDate){
@@ -67,7 +67,7 @@ public class OrdineController {
         LocalDate dateTwo = formatter.parse(endDate, LocalDate::from);
         return ResponseEntity.ok(ordineService.getCarrelloByDate(dateOne, dateTwo));
         } catch(DateTimeException e){
-        return new ResponseEntity<>("dates could not be parsed corractly ", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("wrong input dates " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }

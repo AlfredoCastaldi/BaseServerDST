@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -31,13 +32,22 @@ public class OrdineService {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 
-    public CarrelloDTO getCarrello(Long user_id){
+    public Optional<CarrelloDTO> getCarrello(Long user_id){
         List<Ordine> ordini = ordineRepo.findAll();
         List<Ordine> correctOrders = ordini.stream().filter(ordine -> ordine.getUtente().getId() == user_id).toList();
-        return OrdineMapperDTO.fromOrderListToCarrelloDTO(correctOrders, user_id);
+        CarrelloDTO cattello =  OrdineMapperDTO.fromOrderListToCarrelloDTO(correctOrders, user_id);
+        if (cattello.getTotale() > 0 && !correctOrders.isEmpty()) {
+            return Optional.of(cattello);
+        } else
+        {
+            return Optional.empty();
+        }
     }
-    public List<OrdineResponseDTO> getCarrelloByDate(LocalDate date1, LocalDate date2){
+    public List<OrdineResponseDTO> getCarrelloByDate(LocalDate date1, LocalDate date2) throws DateTimeException{
         List<Ordine> ordini = ordineRepo.findAll();
+        if (date1.isAfter(date2)){
+            throw new DateTimeException("start date cannot be before end date");
+        }
         return ordini.stream().filter(ordine -> ordine.getData().isAfter(date1) && ordine.getData().isBefore(date2))
                 .map(OrdineMapperDTO::fromEntityToDto).toList();
     }

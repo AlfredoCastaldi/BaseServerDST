@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DettaglioOrdineResponseDTO {
 
+    private Long id;
     private Integer quantita;
     private Double prezzoTotale;
     private Ordine ordine;

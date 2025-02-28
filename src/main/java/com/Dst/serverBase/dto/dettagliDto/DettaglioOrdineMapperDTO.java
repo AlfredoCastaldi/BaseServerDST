@@ -36,6 +36,7 @@ public class DettaglioOrdineMapperDTO {
     public static DettaglioOrdineResponseDTO fromEntityToDto(DettaglioOrdine dettaglioOrdine) {
         Double totaleCostoProdotti = dettaglioOrdine.getProdotto().getPrezzo() * dettaglioOrdine.getQuantita();
         return DettaglioOrdineResponseDTO.builder()
+                .id(dettaglioOrdine.getId())
                 .ordine(dettaglioOrdine.getOrdine())
                 .quantita(dettaglioOrdine.getQuantita())
                 .prodotto(dettaglioOrdine.getProdotto())
